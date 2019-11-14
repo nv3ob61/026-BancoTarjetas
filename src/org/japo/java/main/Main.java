@@ -32,9 +32,9 @@ public final class Main {
 
         if (args.length == 1 && args[0].equals(ACCESS_UID)) {
             // Crear aplicación
-            App app = new App();
+            final App APP = new App();
             //Lanzar aplicación
-            app.launchApp();
+            APP.launchApp();
         } else {
             System.out.println("Acceso Denegado");
             System.out.println("---");
