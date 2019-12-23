@@ -36,6 +36,8 @@ public final class App {
     public static final String MSG_CANTIDAD = "El usuario X envia la cantidad: ";
     public static final String MSG_MUESTRA = "Introduce el número de tarjeta "
             + "(0 para salir): ";
+    public static final String MSG_CONF_TRANSA = "¿Desea confirmar "
+            + "la transacción? (SI/NO): ";
 
     public static boolean test;
     public static int i;
@@ -262,6 +264,7 @@ public final class App {
         int sender;
         int receiver;
         double send = 0;
+        String opcion = "";
         //El remitente
         sender = UtilesEntrada.leerEntero(MSG_SENDER, MSG_ERR);
         //comprobamos que la dirección existe
@@ -290,8 +293,20 @@ public final class App {
                             if (receiver == num[j]) {
                                 System.out.println("Número del destino: "
                                         + receiver);
-                                sal[j] += send;
-                                sal[i] = sal[i] - send;
+                                //Añadimos confirmación de la transacción...
+                                do {
+                                    opcion = UtilesEntrada.leerTexto(MSG_CONF_TRANSA);
+                                    if (opcion.equalsIgnoreCase("SI")
+                                            || opcion.equalsIgnoreCase("NO")) {
+                                        if (opcion.equalsIgnoreCase("NO")) {
+
+                                        } else if (opcion.equalsIgnoreCase("SI")) {
+                                            sal[j] += send;
+                                            sal[i] = sal[i] - send;
+                                        }
+                                    }
+                                } while (!opcion.equalsIgnoreCase("SI")
+                                        && !opcion.equalsIgnoreCase("NO"));
                             }
                         }
                         //no documentamos estas líneas siguientes porque se
@@ -299,7 +314,11 @@ public final class App {
                     } else {
                         System.out.println("ERROR: Número destino incorrecto.");
                     }
-                    System.out.println("MENSAJE: Transacción OK");
+                    if (opcion.equalsIgnoreCase("SI")) {
+                        System.out.println("MENSAJE: Transacción OK");
+                    } else {
+                        System.out.println("CANCELADO por el usuario.");
+                    }
                 }
             }
         } else {
